@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config SOC_TH1520
+	bool
+
+config SOC
+	default "th1520" if SOC_TH1520
