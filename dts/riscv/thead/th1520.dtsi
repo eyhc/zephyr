@@ -1,0 +1,71 @@
+/*
+ * SPDX-FileCopyrightText: Copyright 2024-2026 NXP
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <skeleton.dtsi>
+#include <zephyr/dt-bindings/interrupt-controller/thead-th1520-intc.h>
+
+
+/ {
+	model = "T-Head TH1520 SoC";
+	compatible = "thead,th1520";
+
+	#address-cells = <2>;
+	#size-cells = <2>;
+	timebase-frequency = <3000000>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		c910_0: cpu@0 {
+			compatible = "thead,c910", "riscv";
+			device_type = "cpu";
+			riscv,isa-base = "rv64i";
+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c",
+					       "ziccrse", "zicntr", "zicsr",
+					       "zifencei", "zihpm", "zfh",
+					       "xtheadvector";
+			mmu-type = "riscv,sv39";
+			reg = <0>;
+			status = "okay";
+
+			cpu0_intc: interrupt-controller {
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+				#address-cells = <0>;
+				#interrupt-cells = <1>;
+			};
+		};
+	};
+
+	soc {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		#clock-cells = <1>;
+		ranges;
+
+		uart0: serial@ffe7014000 {
+			compatible = "ns16550";
+			reg = <0xff 0xe7014000 0x0 0x100>;
+			reg-shift = <2>;
+			interrupts = <UART0_INTR_SOURCE IRQ_TYPE_LEVEL_HIGH>;
+			clock-frequency = <100000000>;
+			current-speed = <115200>;
+			interrupt-parent = <&plic>;
+			status = "disabled";
+		};
+
+		plic: interrupt-controller@ffd8000000 {
+			compatible = "sifive,plic-1.0.0";
+			reg = <0xff 0xd8000000 0x0 0x04000000>;
+			interrupts-extended = <&cpu0_intc 11 &cpu0_intc 9>;
+			interrupt-controller;
+			#address-cells = <0>;
+			#interrupt-cells = <2>;
+			riscv,max-priority = <31>;
+			riscv,ndev = <240>;
+		};
+	};
+};

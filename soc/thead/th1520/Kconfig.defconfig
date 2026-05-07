@@ -10,4 +10,7 @@ choice UART_NS16550_VARIANT
 	default UART_NS16550_VARIANT_NS16750
 endchoice
 
+config 2ND_LVL_INTR_00_OFFSET
+    default 11
+
 endif # SOC_TH1520
