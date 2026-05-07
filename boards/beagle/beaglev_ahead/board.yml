@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+board:
+  name: beaglev_ahead
+  full_name: BeagleV®-Ahead
+  vendor: beagle
+  socs:
+  - name: th1520

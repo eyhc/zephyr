@@ -1,0 +1,31 @@
+/*
+ * SPDX-FileCopyrightText: Copyright 2024-2026 NXP
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <thead/th1520.dtsi>
+
+/ {
+	model = "BeagleV®-Ahead";
+	compatible = "beagle,beaglev-ahead";
+
+	aliases {
+		uart0 = &uart0;
+	};
+
+	memory: memory@0 {
+		device_type = "memory";
+		reg = <0x0  0x00000000  0x1 0x00000000>; // 4GB LPDDR4
+	};
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,sram = &memory;
+	};
+};
+
+&uart0 {
+	status = "okay";
+};
