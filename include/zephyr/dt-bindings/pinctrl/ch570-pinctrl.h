@@ -1,0 +1,89 @@
+/*
+ * Copyright (c) 2026 SMILE (smile.eu)
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#ifndef __CH570_PINCTRL_H__
+#define __CH570_PINCTRL_H__
+
+/* Starting bit for the remap field in PIN_ALTERNATE_H */
+#define CH570_PINCTRL_UART_RXD       0
+#define CH570_PINCTRL_UART_TXD       3
+#define CH570_PINCTRL_TMR            6
+#define CH570_PINCTRL_SPI_CS         8
+#define CH570_PINCTRL_I2C_PIN        9
+#define CH570_PINCTRL_SPI_CLK        11
+#define CH570_PINCTRL_OSC_25M_ENABLE 12
+
+/* Number of bits for each peripheral's remap configuration */
+#define CH570_PINCTRL_UART_RXD_ALT_WIDTH       3 /* 8 remap options */
+#define CH570_PINCTRL_UART_TXD_ALT_WIDTH       3 /* 8 remap options */
+#define CH570_PINCTRL_TMR_ALT_WIDTH            2 /* 4 remap options */
+#define CH570_PINCTRL_SPI_CS_ALT_WIDTH         1 /* 2 remap options */
+#define CH570_PINCTRL_I2C_PIN_ALT_WIDTH        2 /* 4 remap options */
+#define CH570_PINCTRL_SPI_CLK_ALT_WIDTH        1 /* 2 remap options */
+#define CH570_PINCTRL_OSC_25M_ENABLE_ALT_WIDTH 1 /* 2 remap options */
+
+/* Pin number (0-11) */
+#define CH570_PINCTRL_PIN_SHIFT              0
+#define CH570_PINCTRL_PIN_MASK               GENMASK(3, 0)
+/* Base remap offset in pin alternate register (0-15) */
+#define CH570_PINCTRL_ALT_FIELD_OFFSET_SHIFT 4
+#define CH570_PINCTRL_ALT_FIELD_OFFSET_MASK  GENMASK(7, 4)
+/* Alternate function value (0-max:7) */
+#define CH570_PINCTRL_ALT_FUNC_SHIFT         8
+#define CH570_PINCTRL_ALT_FUNC_MASK          GENMASK(10, 8)
+/* Alternate function field width in bits (1-3) */
+#define CH570_PINCTRL_ALT_FIELD_WIDTH_SHIFT  11
+#define CH570_PINCTRL_ALT_FIELD_WIDTH_MASK   GENMASK(12, 11)
+
+#define CH570_PINMUX_DEFINE(pin, peripheral, remapping)                                            \
+	((pin << CH570_PINCTRL_PIN_SHIFT) |                                                        \
+	 (CH570_PINCTRL_##peripheral << CH570_PINCTRL_ALT_FIELD_OFFSET_SHIFT) |                    \
+	 (remapping << CH570_PINCTRL_ALT_FUNC_SHIFT) |                                             \
+	 (CH570_PINCTRL_##peripheral##_ALT_WIDTH << CH570_PINCTRL_ALT_FIELD_WIDTH_SHIFT))
+
+#define TMR_PWM0_CAPIN1_PA7_0 CH570_PINMUX_DEFINE(7, TMR, 0)
+#define TMR_PWM0_CAPIN1_PA2_1 CH570_PINMUX_DEFINE(2, TMR, 1)
+#define TMR_PWM0_CAPIN1_PA4_2 CH570_PINMUX_DEFINE(4, TMR, 2)
+#define TMR_PWM0_CAPIN1_PA9_3 CH570_PINMUX_DEFINE(9, TMR, 3)
+#define TMR_CAPIN2_PA2_0      CH570_PINMUX_DEFINE(2, TMR, 0)
+#define TMR_CAPIN2_PA7_1      CH570_PINMUX_DEFINE(7, TMR, 1)
+#define TMR_CAPIN2_PA9_2      CH570_PINMUX_DEFINE(9, TMR, 2)
+#define TMR_CAPIN2_PA4_3      CH570_PINMUX_DEFINE(4, TMR, 3)
+
+#define UART_TXD_PA3_0  CH570_PINMUX_DEFINE(3, UART_TXD, 0)
+#define UART_TXD_PA2_1  CH570_PINMUX_DEFINE(2, UART_TXD, 1)
+#define UART_TXD_PA1_2  CH570_PINMUX_DEFINE(1, UART_TXD, 2)
+#define UART_TXD_PA0_3  CH570_PINMUX_DEFINE(0, UART_TXD, 3)
+#define UART_TXD_PA7_4  CH570_PINMUX_DEFINE(7, UART_TXD, 4)
+#define UART_TXD_PA8_5  CH570_PINMUX_DEFINE(8, UART_TXD, 5)
+#define UART_TXD_PA11_6 CH570_PINMUX_DEFINE(11, UART_TXD, 6)
+#define UART_TXD_PA10_7 CH570_PINMUX_DEFINE(10, UART_TXD, 7)
+#define UART_RXD_PA2_0  CH570_PINMUX_DEFINE(2, UART_RXD, 0)
+#define UART_RXD_PA3_1  CH570_PINMUX_DEFINE(3, UART_RXD, 1)
+#define UART_RXD_PA0_2  CH570_PINMUX_DEFINE(0, UART_RXD, 2)
+#define UART_RXD_PA1_3  CH570_PINMUX_DEFINE(1, UART_RXD, 3)
+#define UART_RXD_PA6_4  CH570_PINMUX_DEFINE(6, UART_RXD, 4)
+#define UART_RXD_PA9_5  CH570_PINMUX_DEFINE(9, UART_RXD, 5)
+#define UART_RXD_PA10_6 CH570_PINMUX_DEFINE(10, UART_RXD, 6)
+#define UART_RXD_PA11_7 CH570_PINMUX_DEFINE(11, UART_RXD, 7)
+
+#define SPI_CS_PA4_0  CH570_PINMUX_DEFINE(4, SPI_CS, 0)
+#define SPI_CS_PA2_1  CH570_PINMUX_DEFINE(2, SPI_CS, 1)
+#define SPI_CLK_PA5_0 CH570_PINMUX_DEFINE(5, SPI_CLK, 0)
+#define SPI_CLK_PA3_1 CH570_PINMUX_DEFINE(3, SPI_CLK, 1)
+
+#define I2C_SCL_PA8_0 CH570_PINMUX_DEFINE(8, I2C_PIN, 0)
+#define I2C_SCL_PA0_1 CH570_PINMUX_DEFINE(0, I2C_PIN, 1)
+#define I2C_SCL_PA3_2 CH570_PINMUX_DEFINE(3, I2C_PIN, 2)
+#define I2C_SCL_PA5_3 CH570_PINMUX_DEFINE(5, I2C_PIN, 3)
+#define I2C_SDA_PA9_0 CH570_PINMUX_DEFINE(9, I2C_PIN, 0)
+#define I2C_SDA_PA1_1 CH570_PINMUX_DEFINE(1, I2C_PIN, 1)
+#define I2C_SDA_PA2_2 CH570_PINMUX_DEFINE(2, I2C_PIN, 2)
+#define I2C_SDA_PA6_3 CH570_PINMUX_DEFINE(6, I2C_PIN, 3)
+
+#define OSC25M_ENABLE_PA4_0 CH570_PINMUX_DEFINE(4, OSC_25M_ENABLE, 1)
+
+#endif /* __CH570_PINCTRL_H__ */
