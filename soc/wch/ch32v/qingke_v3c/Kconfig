@@ -2,3 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 config SOC_SERIES_QINGKE_V3C
+
+config SOC_HAS_GPIO_PORTB
+	bool "Hardware GPIO Port B support"

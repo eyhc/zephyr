@@ -9,4 +9,7 @@ config VECTOR_TABLE_SIZE
 config NUM_IRQS
 	default 36
 
+config SOC_HAS_GPIO_PORTB
+	default n
+
 endif # SOC_CH570

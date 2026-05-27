@@ -1,0 +1,23 @@
+# Copyright (c) 2026 SMILE (smile.eu)
+# SPDX-License-Identifier: Apache-2.0
+
+config GPIO_WCH_CH5XX
+	bool "WCH CH5xx GPIO driver"
+	depends on DT_HAS_WCH_GPIO_CH5XX_ENABLED
+	default y
+
+config GPIO_WCH_CH5XX_INTERRUPTS
+	bool "Interrupt support"
+	depends on GPIO_WCH_CH5XX
+	depends on DT_HAS_WCH_PFIC_ENABLED
+	default y
+	help
+	  Support triggering an interrupt on pin change.
+
+config GPIO_WCH_CH5XX_SUPPORT_PORTB
+	bool "GPIO Port B support"
+	depends on GPIO_WCH_CH5XX
+	depends on SOC_HAS_GPIO_PORTB
+	default n
+	help
+	  Enable GPIO Port B if available on the SoC.
