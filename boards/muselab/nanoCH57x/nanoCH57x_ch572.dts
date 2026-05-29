@@ -1,0 +1,43 @@
+/*
+ * Copyright (c) 2026 SMILE (smile.eu)
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <wch/ch57/ch572.dtsi>
+#include "nanoCH57x-pinctrl.dtsi"
+
+/ {
+	model = "nanoCH57x";
+	compatible = "muselab,nano-ch57x";
+
+	chosen {
+		zephyr,console = &uart;
+		zephyr,serial = &uart;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		blue_led: led0 {
+			gpios = <&gpioa 11 GPIO_ACTIVE_HIGH>;
+			label = "LED";
+		};
+	};
+
+	aliases {
+		uart = &uart;
+		led0 = &blue_led;
+	};
+};
+
+&uart {
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart_default>;
+	pinctrl-names = "default";
+};
