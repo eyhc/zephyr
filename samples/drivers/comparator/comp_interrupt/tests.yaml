@@ -1,0 +1,10 @@
+sample:
+  name: Comparator interrupt sample
+tests:
+  sample.drivers.comparator.comp_interrupt:
+    tags:
+      - comparator
+    integration_platforms:
+      - nano_ch57x/ch570
+      - nano_ch57x/ch572
+    depends_on: comparator
