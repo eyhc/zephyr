@@ -1,0 +1,56 @@
+/*
+ * SPDX-FileCopyrightText: 2026 SMILE (smile.eu)
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <zephyr/dt-bindings/pinctrl/ch570-pinctrl.h>
+
+/ {
+	aliases {
+		led0 = &user_led;
+		sample-cmp = &cmp0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		user_led: led_1 {
+			gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
+			label = "LED";
+		};
+	};
+};
+
+&pinctrl {
+	uart_6: uart_6 {
+		group1 {
+			pinmux = <UART_TXD_PA11_6>;
+			output-high;
+			drive-push-pull;
+			output-capacity = "5mA-level";
+		};
+
+		group2 {
+			pinmux = <UART_RXD_PA10_6>;
+			bias-pull-up;
+		};
+	};
+
+	cmp_default: cmp_default {
+		group {
+			pinmux = <CMP_P_PA3_0 CMP_N_PA2_0>;
+			input-disable;
+		};
+	};
+};
+
+&uart0 {
+	pinctrl-0 = <&uart_6>;
+};
+
+&cmp0 {
+	status = "okay";
+	pinctrl-0 = <&cmp_default>;
+	pinctrl-names = "default";
+};
