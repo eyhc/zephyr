@@ -1,0 +1,35 @@
+# Copyright (c) 2025 Microchip Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+title: CH5xx Comparator
+
+description: |
+  Binding for the WCH CH5xx Comparator driver.
+
+compatible: "wch,ch5xx-comparator"
+
+include:
+  - name: base.yaml
+  - name: pinctrl-device.yaml
+
+properties:
+  reg:
+    required: true
+
+  positive-mux-input:
+    type: string
+    enum:
+      - "PA3"
+      - "PA7"
+    default: "PA3"
+    description: |
+      Positive input source selection
+
+  negative-mux-input:
+    type: string
+    enum:
+      - "PA2"
+      - "VREF"
+    default: "PA2"
+    description: |
+      Negative input source selection
