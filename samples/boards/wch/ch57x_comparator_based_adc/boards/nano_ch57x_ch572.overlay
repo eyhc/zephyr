@@ -1,0 +1,29 @@
+/*
+ * SPDX-FileCopyrightText: 2026 SMILE (smile.eu)
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <zephyr/dt-bindings/pinctrl/ch570-pinctrl.h>
+
+/ {
+	aliases {
+		adc-cmp = &cmp0;
+	};
+};
+
+&pinctrl {
+	cmp_1: cmp_1 {
+		group1 {
+			pinmux = <CMP_P1_PA7_0>;
+			input-disable;
+		};
+	};
+};
+
+&cmp0 {
+	status = "okay";
+	pinctrl-0 = <&cmp_1>;
+	negative-mux-input = "VREF";
+	positive-mux-input = "PA7";
+};
