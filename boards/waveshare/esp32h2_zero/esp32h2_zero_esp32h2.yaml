@@ -1,0 +1,22 @@
+identifier: esp32h2_zero/esp32h2
+name: ESP32-H2-Zero
+type: mcu
+arch: riscv
+toolchain:
+  - zephyr
+supported:
+  - adc
+  - gpio
+  - watchdog
+  - uart
+  - dma
+  - pwm
+  - spi
+  - counter
+  - entropy
+  - i2c
+  - i2s
+  - netif:openthread
+  - crypto
+  - retained_mem
+vendor: waveshare
