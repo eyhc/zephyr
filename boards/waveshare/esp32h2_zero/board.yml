@@ -1,0 +1,6 @@
+board:
+  name: esp32h2_zero
+  full_name: ESP32-H2-Zero
+  vendor: waveshare
+  socs:
+  - name: esp32h2
