@@ -9,6 +9,7 @@
 #include <zephyr/drivers/comparator.h>
 #include <zephyr/drivers/comparator/comparator_wch_ch5xx.h>
 #include <zephyr/drivers/pinctrl.h>
+#include <zephyr/drivers/clock_control.h>
 #include <zephyr/irq.h>
 
 #include <hal_ch32fun.h>
@@ -19,6 +20,8 @@ struct comparator_wch_config {
 	uint8_t negative_input_config;
 	const struct pinctrl_dev_config *pin_cfg;
 	void (*irq_config_func)(const struct device *dev);
+	const struct device *clock_dev;
+	uint8_t clock_id;
 };
 
 struct comparator_wch_data {
@@ -120,8 +123,15 @@ static int comparator_wch_init(const struct device *dev)
 {
 	const struct comparator_wch_config *config = dev->config;
 	CMP_TypeDef *regs = config->regs;
+	clock_control_subsys_t clock_sys;
 	uint32_t ctrl = 0U;
 	int err;
+
+	clock_sys = (clock_control_subsys_t)(uintptr_t)config->clock_id;
+	err = clock_control_on(config->clock_dev, clock_sys);
+	if (err != 0) {
+		return err;
+	}
 
 	ctrl |= (config->positive_input_config & 0x1) << 3;
 	ctrl |= (config->negative_input_config & 0x1) << 2;
@@ -163,6 +173,8 @@ static DEVICE_API(comparator_wch, comparator_wch_driver_api) = {
 		.positive_input_config = DT_INST_ENUM_IDX(idx, positive_mux_input),                \
 		.negative_input_config = DT_INST_ENUM_IDX(idx, negative_mux_input),                \
 		.irq_config_func = comparator_wch_irq_config_func_##idx,                           \
+		.clock_dev = DEVICE_DT_GET(DT_INST_CLOCKS_CTLR(idx)),                              \
+		.clock_id = DT_INST_CLOCKS_CELL(idx, id),                                          \
 	};                                                                                         \
 	DEVICE_DT_INST_DEFINE(idx, &comparator_wch_init, NULL, &comparator_wch_##idx##_data,       \
 			      &comparator_wch_##idx##_config, PRE_KERNEL_1,                        \

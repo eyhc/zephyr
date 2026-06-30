@@ -7,6 +7,7 @@
 #include <freq.h>
 #include <mem.h>
 #include <wch/qingke-v3c.dtsi>
+#include <zephyr/dt-bindings/clock/ch570-clock.h>
 
 / {
 	clocks {
@@ -60,6 +61,7 @@
 			reg = <0x40003400 0xf>;
 			interrupt-parent = <&pfic>;
 			interrupts = <27>;
+			clocks = <&clkctrl CH570_CLOCK_UART>;
 			status = "disabled";
 		};
 
@@ -96,6 +98,7 @@
 			reg = <0x40001054 4>;
 			interrupt-parent = <&pfic>;
 			interrupts = <29>;
+			clocks = <&clkctrl CH570_CLOCK_CMP>;
 			status = "disabled";
 		};
 	};
