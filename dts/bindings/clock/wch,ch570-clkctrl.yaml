@@ -1,0 +1,51 @@
+# SPDX-FileCopyrightText: 2026 SMILE (smile.eu)
+# SPDX-License-Identifier: Apache-2.0
+
+description: WCH CH570/CH572 Clock Control
+
+compatible: "wch,ch570-clkctrl"
+
+include: [clock-controller.yaml, base.yaml]
+
+properties:
+  "#clock-cells":
+    const: 1
+
+  clock-divider:
+    default: 5
+    type: int
+    description: |
+      Clock division factor. Valid values are 0 to 31:
+        - 0: divide by 32 (maximum division)
+        - 1: clock disabled
+        - 2-31: divide by the corresponding value
+      The resulting clock frequency must not exceed 100 MHz.
+
+  hse-bias-current-percent:
+    default: 100
+    type: int
+    enum:
+      - 75
+      - 100
+      - 125
+      - 150
+    description: |
+      Oscillator bias current as a percentage of the nominal value.
+
+  hse-load-capacitance-pf:
+    type: int
+    default: 16
+    enum:
+      - 6
+      - 8
+      - 10
+      - 12
+      - 14
+      - 16
+      - 18
+      - 20
+    description: |
+      Internal load capacitance for the external 32 MHz crystal, in pF.
+
+clock-cells:
+  - id

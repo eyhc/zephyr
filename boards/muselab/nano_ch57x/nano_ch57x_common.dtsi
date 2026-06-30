@@ -30,6 +30,10 @@
 	};
 };
 
+&clk_hse {
+	clock-frequency = <DT_FREQ_M(32)>;
+};
+
 &uart0 {
 	status = "okay";
 	current-speed = <115200>;
