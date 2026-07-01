@@ -31,4 +31,16 @@
 			input-disable;
 		};
 	};
+
+	pwm_default: pwm_all {
+		group1 {
+			pinmux = <PWM1_PA7_0>,
+				 <PWM2_PA2_0>,
+				 <PWM3_PA3_0>,
+				 <PWM4_PA4_0>,
+				 <PWM5_PA8_0>;
+			drive-push-pull;
+			output-capacity = "5mA-level";
+		};
+	};
 };

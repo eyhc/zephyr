@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2026 SMILE (smile.eu)
+# SPDX-License-Identifier: Apache-2.0
+
+description: CH5xx PWM Controller Node
+
+compatible: "wch,ch5xx-pwm"
+
+include: [base.yaml, pwm-controller.yaml, pinctrl-device.yaml]
+
+properties:
+  "#pwm-cells":
+    const: 3
+
+  first-channel-number:
+    type: int
+    required: true
+    description: Number of the first PWM channel exposed by this instance.
+
+  counter-width:
+    type: int
+    enum:
+      - 8
+      - 7
+      - 6
+      - 16
+    default: 8
+    description: |
+      Indicates if the PWM controller uses a 16-bit counter instead of a 8-bit counter.
+
+  minus-one-period:
+    type: boolean
+    description: |
+      Select the counter range for 6/7/8-bit modes.
+      If present, the PWM period is: 63 cycles (6-bit)/127 cycles (7-bit)/255 cycles (8-bit)
+      Otherwise, the PWM period is: 64 cycles/128 cycles/256 cycles
+      Ignored when `counter-width` is 16.
+
+  period-cycles-group0:
+    type: int
+    default: 65535
+    description: |
+      PWM period for channels sharing counter group 0 (PWM1-3) used when `counter-width` is 16.
+
+  period-cycles-group1:
+    type: int
+    default: 65535
+    description: |
+      PWM period for channels sharing counter group 1 (PWM4-5) used when `counter-width` is 16.
+
+  prescaler:
+    type: int
+    default: 1
+    description: |
+      Clock divider for the PWM controller between 1 and 65535.
+      The PWM clock is derived from the parent clock by dividing it by this value.
+
+pwm-cells:
+  - channel
+  - period
+  - flags

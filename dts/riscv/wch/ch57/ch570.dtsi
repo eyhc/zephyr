@@ -101,5 +101,15 @@
 			clocks = <&clkctrl CH570_CLOCK_CMP>;
 			status = "disabled";
 		};
+
+		pwm: pwm@40005000 {
+			compatible = "wch,ch5xx-pwm";
+			reg = <0x40005000 0x28>;
+			clocks = <&clkctrl CH570_CLOCK_PWM>;
+			channels = <5>;
+			first-channel-number = <1>;
+			#pwm-cells = <3>;
+			status = "disabled";
+		};
 	};
 };
