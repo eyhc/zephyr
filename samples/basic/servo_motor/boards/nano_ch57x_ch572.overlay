@@ -1,0 +1,36 @@
+/*
+ * SPDX-FileCopyrightText: 2026 SMILE (smile.eu)
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <zephyr/dt-bindings/pwm/pwm.h>
+#include <zephyr/dt-bindings/pinctrl/ch570-pinctrl.h>
+
+/ {
+	servo: servo {
+		compatible = "pwm-servo";
+		pwms = <&pwm 1 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+		min-pulse = <PWM_USEC(700)>;
+		max-pulse = <PWM_USEC(2500)>;
+	};
+};
+
+&pinctrl {
+	pwm_pinmux_1: pwm_pinmux_1 {
+		group1 {
+			pinmux = <PWM1_PA7_0>;
+			drive-push-pull;
+			output-capacity = "5mA-level";
+		};
+	};
+};
+
+&pwm {
+	counter-width = <16>;
+	period-cycles-group0 = <62500>;
+	pinctrl-0 = <&pwm_pinmux_1>;
+	prescaler = <32>;
+	pinctrl-names = "default";
+	status = "okay";
+};
