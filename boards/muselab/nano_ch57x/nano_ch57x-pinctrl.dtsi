@@ -31,4 +31,12 @@
 			input-disable;
 		};
 	};
+
+	i2c0_default: i2c0_default {
+		group1 {
+			pinmux = <I2C_SDA_PA9_0>,
+				 <I2C_SCL_PA8_0>;
+			bias-pull-up;
+		};
+	};
 };

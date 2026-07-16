@@ -1,0 +1,15 @@
+# Copyright (c) 2026 Smile (smile.eu)
+# SPDX-License-Identifier: Apache-2.0
+
+config I2C_WCH_CH5XX
+	bool "WCH CH5XX I2C driver"
+	default y
+	depends on DT_HAS_WCH_CH5XX_I2C_ENABLED
+	select PINCTRL
+	help
+	  Enable I2C support on WCH CH5XX platforms
+
+config I2C_WCH_CH5XX_XFER_TIMEOUT_MS
+	int "Set the transfer timeout in milliseconds"
+	depends on I2C_WCH_CH5XX
+	default 500

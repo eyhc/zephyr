@@ -101,5 +101,16 @@
 			clocks = <&clkctrl CH570_CLOCK_CMP>;
 			status = "disabled";
 		};
+
+		i2c0: i2c@40004800 {
+			compatible = "wch,ch5xx-i2c";
+			reg = <0x40004800 0x24>;
+			clocks = <&clkctrl CH570_CLOCK_I2C>;
+			interrupt-parent = <&pfic>;
+			interrupts = <30>;
+			status = "disabled";
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
 	};
 };

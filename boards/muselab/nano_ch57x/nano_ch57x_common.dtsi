@@ -5,6 +5,7 @@
  */
 
 #include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/i2c/i2c.h>
 #include "nano_ch57x-pinctrl.dtsi"
 
 / {
@@ -45,4 +46,10 @@
 	status = "disabled";
 	pinctrl-0 = <&cmp_default>;
 	pinctrl-names = "default";
+};
+
+&i2c0 {
+	pinctrl-0 = <&i2c0_default>;
+	pinctrl-names = "default";
+	clock-frequency = <I2C_BITRATE_FAST>;
 };
