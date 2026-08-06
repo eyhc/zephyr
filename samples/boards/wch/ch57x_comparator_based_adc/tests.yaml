@@ -1,0 +1,11 @@
+sample:
+  name: Comparator based ADC sample
+tests:
+  sample.boards.wch.ch57x_comparator_based_adc:
+    tags:
+      - comparator
+    integration_platforms:
+      - nano_ch57x/ch570
+      - nano_ch57x/ch572
+    depends_on:
+      - comparator
